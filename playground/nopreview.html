@@ -91,30 +91,29 @@ compost.charts.lines([china,usa])
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script>
 
   <!-- Loading Monaco and TheGamma scripts -->
-  <script src="/node_modules/babel-standalone/babel.js"></script>
-  <script src="/node_modules/requirejs/require.js"></script>
+  <script src="https://thegamma.net/lib/thegamma-0.1/babel.min.js"></script>
+  <script src="https://thegamma.net/lib/thegamma-0.1/require.js"></script>
   <script>
     // This follows the standard way of loading the Monaco editor (https://github.com/Microsoft/monaco-editor)
     // although we use normal 'require.js' and also load the compiled 'thegamma.js' (which depends on Monaco)
     require.config({
-      paths:{'vs':'/node_modules/monaco-editor/min/vs'},
+      paths:{'vs':'https://thegamma.net/lib/thegamma-0.1/vs'},
       map:{ "*":{"monaco":"vs/editor/editor.main"}}
     });
-    require(["vs/editor/editor.main", "/node_modules/thegamma-script/dist/thegamma.js"], function (_, g) {
-      // Configure type providers available in The Gamma
-      // (when running thegamma-services locally, use http://127.0.0.1:10042/)
-      var services = "https://thegamma-services.azurewebsites.net/";
-      //var services = "http://127.0.0.1:10042/";
+    require(["vs/editor/editor.main", "https://thegamma.net/lib/thegamma-0.1/thegamma.js"], function (_, g) {
+      var isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+      var services = (isLocal ? "http://localhost:5000" : "https://SERVICES_URL_PLACEHOLDER") + "/services/";
+      var gallery = (isLocal ? "http://localhost:5000" : "https://SERVICES_URL_PLACEHOLDER") + "/services/csv/";
       var providers =
         g.providers.createProviders({
           "worldbank": g.providers.rest(services + "worldbank"),
-          "libraries": g.providers.library("/node_modules/thegamma-script/dist/libraries.json"),
+          "libraries": g.providers.library("https://thegamma.net/lib/thegamma-0.1/libraries.json"),
           "olympics": g.providers.pivot(services + "pdata/olympics"),
-          "shared": g.providers.rest("https://gallery-csv-service.azurewebsites.net/providers/listing"),
-          "expenditure": g.providers.rest("https://govuk-expenditure.azurewebsites.net/expenditure"),
-          "videos": g.providers.pivot("https://gallery-csv-service.azurewebsites.net/providers/csv/2017-05-12/file_8.csv"),
-          "views": g.providers.pivot("https://gallery-csv-service.azurewebsites.net/providers/csv/2017-05-29/file_3.csv"),
-          "web": g.providers.rest("https://gallery-csv-service.azurewebsites.net/providers/data"),
+          "shared": g.providers.rest(gallery + "providers/listing"),
+          "expenditure": g.providers.rest(services + "expenditure"),
+          "videos": g.providers.pivot(gallery + "providers/csv/2017-05-12/file_8.csv"),
+          "views": g.providers.pivot(gallery + "providers/csv/2017-05-29/file_3.csv"),
+          "web": g.providers.rest(gallery + "providers/data"),
           "drwho": g.providers.rest("https://thegamma-graph-service.azurewebsites.net/drWho")
         });
 

@@ -114,8 +114,8 @@ compost.charts.column(topEnemies)
     });
     require(["vs/editor/editor.main", "https://thegamma.net/lib/thegamma-0.1/thegamma.js"], function (_, g) {
       var isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
-      var services = (isLocal ? "http://localhost:5000" : "https://SERVICES_URL_PLACEHOLDER") + "/services/";
-      var gallery = (isLocal ? "http://localhost:5000" : "https://SERVICES_URL_PLACEHOLDER") + "/services/csv/";
+      var services = (isLocal ? "http://localhost:5000" : "https://services.thegamma.net") + "/services/";
+      var gallery = (isLocal ? "http://localhost:5000" : "https://services.thegamma.net") + "/services/csv/";
       var providers =
         g.providers.createProviders({
           "worldbank": g.providers.rest(services + "worldbank"),

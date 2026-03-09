@@ -126,7 +126,7 @@ compost.charts.column(topEnemies)
           "videos": g.providers.pivot(gallery + "providers/csv/2017-05-12/file_8.csv"),
           "views": g.providers.pivot(gallery + "providers/csv/2017-05-29/file_3.csv"),
           "web": g.providers.rest(gallery + "providers/data"),
-          "drwho": g.providers.rest("https://thegamma-graph-service.azurewebsites.net/drWho")
+          "drwho": g.providers.rest(services + "drwho")
         });
 
       // Create context which is used to create editor & run code
